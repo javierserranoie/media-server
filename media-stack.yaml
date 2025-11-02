@@ -1,0 +1,1049 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: media
+---
+# ================== PVs / PVCs (hostPath + local-path) ==================
+# Emby config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-emby-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/emby}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-emby-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-emby-config
+---
+# TV Shows
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-media-tv
+spec:
+  storageClassName: local-path
+  capacity: {storage: 20Gi}
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/pv/tv}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-media-tv
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources: {requests: {storage: 20Gi}}
+  volumeName: pv-media-tv
+---
+# Movies
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-media-movies
+spec:
+  storageClassName: local-path
+  capacity: {storage: 20Gi}
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/pv/movies}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-media-movies
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources: {requests: {storage: 20Gi}}
+  volumeName: pv-media-movies
+---
+# Downloads
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-downloads
+spec:
+  storageClassName: local-path
+  capacity: {storage: 20Gi}
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/pv/downloads}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-downloads
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources: {requests: {storage: 20Gi}}
+  volumeName: pv-downloads
+---
+# Books
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-media-books
+spec:
+  storageClassName: local-path
+  capacity: {storage: 5Gi}
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/pv/books}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-media-books
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources: {requests: {storage: 5Gi}}
+  volumeName: pv-media-books
+---
+# Audiobooks
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-media-audiobooks
+spec:
+  storageClassName: local-path
+  capacity: {storage: 5Gi}
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/pv/audiobooks}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-media-audiobooks
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources: {requests: {storage: 5Gi}}
+  volumeName: pv-media-audiobooks
+---
+# Music (para Lidarr)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-media-music
+spec:
+  storageClassName: local-path
+  capacity: {storage: 5Gi}
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/pv/music}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-media-music
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources: {requests: {storage: 5Gi}}
+  volumeName: pv-media-music
+---
+# qBittorrent config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-qb-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/qbittorrent}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-qb-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-qb-config
+---
+# Prowlarr config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-prowlarr-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/prowlarr}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-prowlarr-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-prowlarr-config
+---
+# Sonarr config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-sonarr-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/sonarr}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-sonarr-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-sonarr-config
+---
+# Radarr config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-radarr-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/radarr}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-radarr-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-radarr-config
+---
+# Lidarr config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-lidarr-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/lidarr}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-lidarr-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-lidarr-config
+---
+# Lazylibrarian config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-lazylibrarian-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/lazylibrarian}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-lazylibrarian-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-lazylibrarian-config
+---
+# Bazarr config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-bazarr-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/bazarr}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-bazarr-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-bazarr-config
+---
+# Jellyseerr config
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-jellyseerr-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/jellyseerr}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-jellyseerr-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-jellyseerr-config
+---
+# SABnzbd config (opcional)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-sabnzbd-config
+spec:
+  storageClassName: local-path
+  capacity: {storage: 2Gi}
+  accessModes: ["ReadWriteOnce"]
+  persistentVolumeReclaimPolicy: Retain
+  hostPath: {path: ${ARR_LOCAL_PATH_PREFIX}/media/sv/sabnzbd}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-sabnzbd-config
+  namespace: media
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources: {requests: {storage: 2Gi}}
+  volumeName: pv-sabnzbd-config
+---
+# ================== Deployments + Services ==================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emby
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: emby}}
+  template:
+    metadata:
+      labels: {app: emby}
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      securityContext:
+        fsGroup: 100
+        supplementalGroups: [91, 104]
+      containers:
+      - name: emby
+        image: emby/embyserver:latest
+        resources:
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+            limits:
+              cpu: "4"
+              memory: "6Gi"
+        env:
+          - name: UID
+            value: "1000"
+          - name: GID
+            value: "100"
+          - name: GIDLIST
+            value: "91,104"
+          - name: TZ
+            value: "Europe/Madrid"
+        ports:
+          - containerPort: 8096
+          - containerPort: 8920
+        volumeMounts:
+          - {name: emby-config, mountPath: /config}
+          - {name: media-tv, mountPath: /media/tv}
+          - {name: media-movies, mountPath: /media/movies}
+          - {name: media-music, mountPath: /media/music}
+          - {name: media-books, mountPath: /media/books} 
+          - {name: media-audiobooks, mountPath: /media/audiobooks}
+          - {name: downloads, mountPath: /downloads}
+          - {name: dev-dri, mountPath: /dev/dri}
+      volumes:
+        - {name: emby-config, persistentVolumeClaim: {claimName: pvc-emby-config}}
+        - {name: media-tv, persistentVolumeClaim: {claimName: pvc-media-tv}}
+        - {name: media-movies, persistentVolumeClaim: {claimName: pvc-media-movies}}
+        - {name: media-music, persistentVolumeClaim: {claimName: pvc-media-music}}
+        - {name: media-books, persistentVolumeClaim: {claimName: pvc-media-books}}
+        - {name: media-audiobooks, persistentVolumeClaim: {claimName: pvc-media-audiobooks}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+        - {name: dev-dri, hostPath: {path: /dev/dri}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emby
+  namespace: media
+spec:
+  selector: {app: emby}
+  ports:
+    - {name: http, port: 8096, targetPort: 8096}
+    - {name: https, port: 8920, targetPort: 8920}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: qbittorrent}}
+  template:
+    metadata:
+      labels: {app: qbittorrent}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: qbittorrent
+        image: lscr.io/linuxserver/qbittorrent:latest
+        resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+          - {name: WEBUI_PORT, value: "8080"}
+        ports:
+          - containerPort: 8080
+          - containerPort: 6881
+          - containerPort: 6881
+            protocol: UDP
+        volumeMounts:
+          - {name: qb-config, mountPath: /config}
+          - {name: downloads, mountPath: /downloads}
+      volumes:
+        - {name: qb-config, persistentVolumeClaim: {claimName: pvc-qb-config}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qbittorrent
+  namespace: media
+spec:
+  selector: {app: qbittorrent}
+  ports:
+    - {name: web, port: 8080, targetPort: 8080}
+    - {name: bt, port: 6881, targetPort: 6881}
+    - {name: bt-udp, port: 6881, targetPort: 6881, protocol: UDP}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prowlarr
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: prowlarr}}
+  template:
+    metadata:
+      labels: {app: prowlarr}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: prowlarr
+        image: lscr.io/linuxserver/prowlarr:latest
+        resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1.5Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 9696}]
+        volumeMounts:
+          - {name: prowlarr-config, mountPath: /config}
+      volumes:
+        - {name: prowlarr-config, persistentVolumeClaim: {claimName: pvc-prowlarr-config}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+  namespace: media
+spec:
+  selector: {app: prowlarr}
+  ports:
+    - {name: http, port: 9696, targetPort: 9696}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: sonarr}}
+  template:
+    metadata:
+      labels: {app: sonarr}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: sonarr
+        image: lscr.io/linuxserver/sonarr:latest
+        resources:
+            requests:
+              cpu: "300m"
+              memory: "512Mi"
+            limits:
+              cpu: "1.5"
+              memory: "2Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 8989}]
+        volumeMounts:
+          - {name: sonarr-config, mountPath: /config}
+          - {name: downloads, mountPath: /downloads}
+          - {name: media-tv, mountPath: /media/tv}
+      volumes:
+        - {name: sonarr-config, persistentVolumeClaim: {claimName: pvc-sonarr-config}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+        - {name: media-tv, persistentVolumeClaim: {claimName: pvc-media-tv}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: media
+spec:
+  selector: {app: sonarr}
+  ports:
+    - {name: http, port: 8989, targetPort: 8989}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: radarr}}
+  template:
+    metadata:
+      labels: {app: radarr}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: radarr
+        image: lscr.io/linuxserver/radarr:latest
+        resources:
+            requests:
+              cpu: "300m"
+              memory: "512Mi"
+            limits:
+              cpu: "1.5"
+              memory: "2Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 7878}]
+        volumeMounts:
+          - {name: radarr-config, mountPath: /config}
+          - {name: downloads, mountPath: /downloads}
+          - {name: media-movies, mountPath: /media/movies}
+      volumes:
+        - {name: radarr-config, persistentVolumeClaim: {claimName: pvc-radarr-config}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+        - {name: media-movies, persistentVolumeClaim: {claimName: pvc-media-movies}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  namespace: media
+spec:
+  selector: {app: radarr}
+  ports:
+    - {name: http, port: 7878, targetPort: 7878}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lidarr
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: lidarr}}
+  template:
+    metadata:
+      labels: {app: lidarr}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: lidarr
+        image: lscr.io/linuxserver/lidarr:latest
+        resources:
+            requests:
+              cpu: "200m"
+              memory: "384Mi"
+            limits:
+              cpu: "1"
+              memory: "1.5Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 8686}]
+        volumeMounts:
+          - {name: lidarr-config, mountPath: /config}
+          - {name: downloads, mountPath: /downloads}
+          - {name: media-music, mountPath: /media/music}
+      volumes:
+        - {name: lidarr-config, persistentVolumeClaim: {claimName: pvc-lidarr-config}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+        - {name: media-music, persistentVolumeClaim: {claimName: pvc-media-music}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lidarr
+  namespace: media
+spec:
+  selector: {app: lidarr}
+  ports:
+    - {name: http, port: 8686, targetPort: 8686}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lazylibrarian
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: lazylibrarian}}
+  template:
+    metadata:
+      labels: {app: lazylibrarian}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: lazylibrarian
+        image: lscr.io/linuxserver/lazylibrarian:latest
+        resources:
+            requests:
+              cpu: "300m"
+              memory: "512Mi"
+            limits:
+              cpu: "1.5"
+              memory: "2Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 5299}]
+        volumeMounts:
+          - {name: lazylibrarian-config, mountPath: /config}
+          - {name: downloads, mountPath: /downloads}
+          - {name: media-books, mountPath: /books}
+          - {name: media-audiobooks, mountPath: /audiobooks}
+      volumes:
+        - {name: lazylibrarian-config, persistentVolumeClaim: {claimName: pvc-lazylibrarian-config}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+        - {name: media-books, persistentVolumeClaim: {claimName: pvc-media-books}}
+        - {name: media-audiobooks, persistentVolumeClaim: {claimName: pvc-media-audiobooks}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lazylibrarian
+  namespace: media
+spec:
+  selector: {app: lazylibrarian}
+  ports:
+    - {name: http, port: 5299, targetPort: 5299}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: bazarr}}
+  template:
+    metadata:
+      labels: {app: bazarr}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: bazarr
+        image: lscr.io/linuxserver/bazarr:latest
+        resources:
+            requests:
+              cpu: "200m"
+              memory: "384Mi"
+            limits:
+              cpu: "1"
+              memory: "1.5Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 6767}]
+        volumeMounts:
+          - {name: bazarr-config, mountPath: /config}
+          - {name: media-movies, mountPath: /media/movies}
+          - {name: media-tv, mountPath: /media/tv}
+      volumes:
+        - {name: bazarr-config, persistentVolumeClaim: {claimName: pvc-bazarr-config}}
+        - {name: media-movies, persistentVolumeClaim: {claimName: pvc-media-movies}}
+        - {name: media-tv, persistentVolumeClaim: {claimName: pvc-media-tv}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  namespace: media
+spec:
+  selector: {app: bazarr}
+  ports:
+    - {name: http, port: 6767, targetPort: 6767}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jellyseerr
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: jellyseerr}}
+  template:
+    metadata:
+      labels: {app: jellyseerr}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: jellyseerr
+        image: ghcr.io/fallenbagel/jellyseerr:latest
+        resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 5055}]
+        volumeMounts:
+          - {name: jellyseerr-config, mountPath: /app/config}
+      volumes:
+        - {name: jellyseerr-config, persistentVolumeClaim: {claimName: pvc-jellyseerr-config}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyseerr
+  namespace: media
+spec:
+  selector: {app: jellyseerr}
+  ports:
+    - {name: http, port: 5055, targetPort: 5055}
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sabnzbd
+  namespace: media
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: sabnzbd}}
+  template:
+    metadata:
+      labels: {app: sabnzbd}
+    spec:
+      securityContext: {fsGroup: 100}
+      containers:
+      - name: sabnzbd
+        image: lscr.io/linuxserver/sabnzbd:latest
+        resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1.5"
+              memory: "2Gi"
+        env:
+          - {name: PUID, value: "1000"}
+          - {name: PGID, value: "100"}
+          - {name: TZ, value: "Europe/Madrid"}
+        ports: [{containerPort: 8080}]
+        volumeMounts:
+          - {name: sabnzbd-config, mountPath: /config}
+          - {name: downloads, mountPath: /downloads}
+      volumes:
+        - {name: sabnzbd-config, persistentVolumeClaim: {claimName: pvc-sabnzbd-config}}
+        - {name: downloads, persistentVolumeClaim: {claimName: pvc-downloads}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sabnzbd
+  namespace: media
+spec:
+  selector: {app: sabnzbd}
+  ports:
+    - {name: http, port: 8080, targetPort: 8080}
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emby-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: emby.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: emby
+                port:
+                  number: 8096
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: qbittorrent-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: qbittorrent.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qbittorrent
+                port:
+                  number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prowlarr-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: prowlarr.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prowlarr
+                port:
+                  number: 9696
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sonarr-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: sonarr.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sonarr
+                port:
+                  number: 8989
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: radarr-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: radarr.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: radarr
+                port:
+                  number: 7878
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lidarr-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: lidarr.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lidarr
+                port:
+                  number: 8686
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lazylibrarian-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: lazylibrarian.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lazylibrarian
+                port:
+                  number: 5299
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bazarr-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: bazarr.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: bazarr
+                port:
+                  number: 6767
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyseerr-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: jellyseerr.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: jellyseerr
+                port:
+                  number: 5055
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sabnzbd-ing
+  namespace: media
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: sabnzbd.media.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sabnzbd
+                port:
+                  number: 8080
+
+# echo "192.168.0.12 emby.media.local sonarr.media.local radarr.media.local prowlarr.media.local bazarr.media.local lazylibrarian.media.local lidarr.media.local jellyseerr.media.local qbittorrent.media.local sabnzbd.media.local" | sudo tee -a /etc/hosts
