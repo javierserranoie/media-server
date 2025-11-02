@@ -14,10 +14,10 @@ $ kubectl -n media logs deploy/qbittorrent | grep -i password
 
 ## local kubernetes endpoints
 
-http://prowlarr.media.svc.cluster.local:9696
-http://sonarr.media.svc.cluster.local:8989
-http://radarr.media.svc.cluster.local:7878
-http://qbittorrent.media.svc.cluster.local:8080
+- http://prowlarr.media.svc.cluster.local:9696
+- http://sonarr.media.svc.cluster.local:8989
+- http://radarr.media.svc.cluster.local:7878
+- http://qbittorrent.media.svc.cluster.local:8080
 
 # Operation
 
