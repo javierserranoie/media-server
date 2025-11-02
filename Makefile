@@ -23,7 +23,7 @@ apply:
 
 .PHONY: delete
 delete:
-	@kubectl delete -f media-stack.yaml
+	@envsubst < media-stack.yaml | kubectl delete -f -
 
 .PHONY: prepare
 prepare:
