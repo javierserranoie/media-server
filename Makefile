@@ -11,11 +11,13 @@ help:
 
 .PHONY: start
 start:
+	@docker start registry 
 	@sudo systemctl start k3s
 
 .PHONY: stop
 stop:
-	@sudo systemctl stop k3s
+	@sudo systemctl stop k3s*
+	@docker stop registry
 
 .PHONY: apply
 apply:
